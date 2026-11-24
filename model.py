@@ -53,14 +53,48 @@ def ensure_pad_token(tokenizer):
     
     return tokenizer
 
-# Step 5 - get_lora_target_modules (not yet solved)
-# TODO: implement
+# Step 5 - get_lora_target_modules
+def get_lora_target_modules():
+    """Return the attention projection module name suffixes for LoRA."""
+    # TODO: return the list of attention projection module names LoRA should adapt
 
-# Step 6 - attach_lora_adapters (not yet solved)
-# TODO: implement
+    target_modules = ["q_proj", "k_proj", "v_proj", "o_proj"]
 
-# Step 7 - count_trainable_parameters (not yet solved)
-# TODO: implement
+    return target_modules
+
+# Step 6 - attach_lora_adapters
+def attach_lora_adapters(model, r=8, lora_alpha=16, target_modules=None):
+    """Wrap the base model with LoRA adapters and return the PEFT model."""
+    # TODO: wrap `model` with LoRA via FastLanguageModel.get_peft_model using r, lora_alpha, target_modules
+
+    from unsloth import FastLanguageModel
+
+    if target_modules is None:
+        target_modules = get_lora_target_modules()
+
+    model = FastLanguageModel.get_peft_model(
+        model=model,
+        r=r,
+        target_modules=target_modules,
+        lora_alpha=lora_alpha,
+        lora_dropout=0,
+        bias="none"
+    )
+
+    return(model.get_base_model())
+
+# Step 7 - count_trainable_parameters
+def count_trainable_parameters(model):
+    """Return the number of trainable parameters in `model`."""
+    # TODO: sum p.numel() over model.parameters() where requires_grad is True
+    
+    import torch.nn as nn 
+    total = 0
+    for param in model.parameters():
+        if param.requires_grad is True:
+            total += param.numel()
+
+    return total
 
 # Step 8 - trainable_fraction (not yet solved)
 # TODO: implement
