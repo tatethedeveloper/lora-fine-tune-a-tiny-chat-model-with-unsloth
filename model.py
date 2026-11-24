@@ -102,8 +102,26 @@ def trainable_fraction(trainable_count, total_count):
         return 0.0
     return trainable_count / total_count
 
-# Step 9 - build_instruction_examples (not yet solved)
-# TODO: implement
+# Step 9 - build_instruction_examples
+def build_instruction_examples():
+    """Return a small list of instruction/response examples for SFT."""
+    
+    dicts = [
+        {
+            "instruction": "Count to 10.",
+            "response": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
+        },
+        {
+            "instruction": "What is 3 + 4?",
+            "response": "7",
+        },
+        {
+            "instruction": "Rewrite 'the dog ran' in uppercase.",
+            "response": "THE DOG RAN",
+        },
+    ]
+
+    return dicts
 
 # Step 10 - format_instruction_example (not yet solved)
 # TODO: implement
