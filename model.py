@@ -81,7 +81,7 @@ def attach_lora_adapters(model, r=8, lora_alpha=16, target_modules=None):
         bias="none"
     )
 
-    return(model.get_base_model())
+    return model
 
 # Step 7 - count_trainable_parameters
 def count_trainable_parameters(model):
@@ -196,8 +196,20 @@ def build_training_arguments(output_dir='./sft_out', max_steps=5, learning_rate=
     
     return trainingargs
 
-# Step 16 - build_sft_trainer (not yet solved)
-# TODO: implement
+# Step 16 - build_sft_trainer
+def build_sft_trainer(model, tokenizer, dataset, training_args, max_seq_length=256):
+    """Build an SFT trainer for the dataset's text column."""
+    from trl import SFTTrainer
+
+    return SFTTrainer(
+        model=model,
+        tokenizer=tokenizer,
+        train_dataset=dataset,
+        args=training_args,
+        dataset_text_field="text",
+        max_seq_length=max_seq_length,
+        packing=False,
+    )
 
 # Step 17 - run_sft_training (not yet solved)
 # TODO: implement
